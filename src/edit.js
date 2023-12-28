@@ -19,6 +19,15 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
+import React, { useRef, useState } from "react";
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from 'swiper/modules';
+
 import './editor.scss';
 
 /**
@@ -31,8 +40,16 @@ import './editor.scss';
  */
 export default function Edit() {
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Pk Slider – hello from the Editor!', 'pk-slider' ) }
-		</p>
+		<div { ...useBlockProps() }>
+	<>
+      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+      </Swiper>
+    </>
+		</div>
 	);
 }
