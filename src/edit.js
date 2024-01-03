@@ -21,14 +21,9 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 import React, { useRef, useState } from "react";
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from 'swiper/modules';
 
 import './editor.scss';
+import { SwiperSlider } from './SwiperSlider';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -41,15 +36,7 @@ import './editor.scss';
 export default function Edit() {
 	return (
 		<div { ...useBlockProps() }>
-	<>
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-      </Swiper>
-    </>
+    <SwiperSlider/>
 		</div>
 	);
 }

@@ -93,6 +93,15 @@ function custom_image_enqueue_scripts() {
 	wp_enqueue_style( 'pk-slider-styles', plugin_dir_url( __FILE__ ) . 'assets/css/pk-slider-style.css', array() );
 	// Enqueue scripts.
 	wp_enqueue_script( 'pk-slider-scripts', plugin_dir_url( __FILE__ ) . 'assets/scripts/pk-slider-script.js', array( 'jquery' ), '1.8.1', true );
+	// Create and localize nonce for security checks
+	$pk_slider_nonce = wp_create_nonce( 'wp_rest' );
+	wp_localize_script(
+		'pk-slider-scripts',
+		'pk_slider',
+		array(
+			'nonce' => $pk_slider_nonce,
+		)
+	);
 }
 add_action( 'wp_enqueue_scripts', 'custom_image_enqueue_scripts' );
 
@@ -134,7 +143,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/shortcode.php';
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-
 function pk_slider_pk_slider_block_init() {
 	register_block_type(
 		__DIR__ . '/build',
@@ -149,3 +157,62 @@ function render_on_frontend() {
 	$shortcode = do_shortcode( shortcode_unautop( '[display_slider]' ) );
 	return $shortcode;
 }
+
+// Adda new (custom) block category and show that category at the top
+function create_block_custom_cat( $block_categories, $block_editor_context ) {
+
+	if ( $block_editor_context->post ) {
+
+		array_push(
+			$block_categories,
+			array(
+				'slug'  => 'pk-slider',
+				'title' => __( 'Pk Slider', 'pk-slider' ),
+				'icon'  => '',
+			)
+		);
+
+	}
+
+	return $block_categories;
+}
+
+add_filter( 'block_categories_all', 'create_block_custom_cat', 999, 2 );
+
+
+
+function custom_pkslider_api_endpoint() {
+	register_rest_route(
+		'custom/v1',
+		'/pkslider/',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'get_pkslider_list',
+			'permission_callback' => '__return_true',
+		)
+	);
+}
+
+function get_pkslider_list() {
+	$args = array(
+		'post_type'      => 'slider',
+		'posts_per_page' => -1,
+	);
+
+	$slider_posts = get_posts( $args );
+	$slider_data  = array();
+
+	foreach ( $slider_posts as $post ) {
+		$image_id  = get_post_meta( $post->ID, '_custom_image_id', true );
+		$image_url = wp_get_attachment_url( $image_id );
+		$slider_data[] = array(
+			'ID'         => $post->ID,
+			'post_title' => $post->post_title,
+			'image_url'  => $image_url,
+
+		);
+	}
+	return $slider_data;
+}
+
+add_action( 'rest_api_init', 'custom_pkslider_api_endpoint' );

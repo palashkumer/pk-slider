@@ -1,4 +1,4 @@
-<?php 
+<?php
 function display_slider_shortcode() {
 	ob_start();
 
@@ -20,7 +20,7 @@ function display_slider_shortcode() {
 				?>
 				<div class="swiper-slide">
 					<?php
-					// Output the slider image
+					// Output the slider image.
 					$image_id = get_post_meta( get_the_ID(), '_custom_image_id', true );
 					if ( $image_id ) {
 						echo wp_get_attachment_image( $image_id, 'full' );
@@ -39,6 +39,7 @@ function display_slider_shortcode() {
 	wp_reset_postdata();
 
 	$output = ob_get_clean();
+
 	return $output;
 }
 add_shortcode( 'display_slider', 'display_slider_shortcode' );

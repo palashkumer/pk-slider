@@ -4,12 +4,21 @@
 	"name": "create-block/pk-slider",
 	"version": "0.1.0",
 	"title": "Pk Slider",
-	"category": "common",
+	"category": "pk-slider",
 	"icon": "smiley",
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"attributes": {
+		"test":{
+			"type":"string",
+			"default":"Hello World!"
+		}
 	},
 	"textdomain": "pk-slider",
 	"editorScript": "file:./index.js",
