@@ -222,3 +222,17 @@ function get_pkslider_list() {
 add_action( 'rest_api_init', 'custom_pkslider_api_endpoint' );
 
 
+/**
+ * Register Pk Slider Widget.
+ *
+ * @since 1.0.0
+ * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
+ * @return void
+ */
+function register_pk_slider_widget( $widgets_manager ) {
+
+	require plugin_dir_path( __FILE__ ) . 'pk-slider-widget.php';
+
+	$widgets_manager->register( new \Elementor_pk_slider_Widget() );
+}
+add_action( 'elementor/widgets/register', 'register_pk_slider_widget' );
