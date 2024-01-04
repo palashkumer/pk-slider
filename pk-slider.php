@@ -148,17 +148,20 @@ function pk_slider_pk_slider_block_init() {
 		__DIR__ . '/build',
 		array(
 			'render_callback' => 'render_on_frontend',
+			
 		)
 	);
 }
 add_action( 'init', 'pk_slider_pk_slider_block_init' );
+
+
 
 function render_on_frontend() {
 	$shortcode = do_shortcode( shortcode_unautop( '[display_slider]' ) );
 	return $shortcode;
 }
 
-// Adda new (custom) block category and show that category at the top
+// Add a new (custom) block category and show that category at the top
 function create_block_custom_cat( $block_categories, $block_editor_context ) {
 
 	if ( $block_editor_context->post ) {
@@ -203,11 +206,12 @@ function get_pkslider_list() {
 	$slider_data  = array();
 
 	foreach ( $slider_posts as $post ) {
-		$image_id  = get_post_meta( $post->ID, '_custom_image_id', true );
-		$image_url = wp_get_attachment_url( $image_id );
+		$image_id      = get_post_meta( $post->ID, '_custom_image_id', true );
+		$image_url     = wp_get_attachment_url( $image_id );
 		$slider_data[] = array(
 			'ID'         => $post->ID,
 			'post_title' => $post->post_title,
+			'image_id'   => $image_id ,
 			'image_url'  => $image_url,
 
 		);
@@ -216,3 +220,5 @@ function get_pkslider_list() {
 }
 
 add_action( 'rest_api_init', 'custom_pkslider_api_endpoint' );
+
+
