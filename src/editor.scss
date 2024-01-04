@@ -22,4 +22,18 @@
 	  object-fit: cover;
 	}
   }
-  
+  .add-img-btn {
+    background-color: #170e62;
+    color: #ecf2e8;
+    border: none;
+    border-radius: 10px;
+    margin: 5px 4px;
+    padding: 6px 10px;
+    font-weight: bolder;
+	margin-top: 5px;
+}
+.add-img-btn:hover{
+	cursor: pointer;
+	background-color: #000000;
+	color: #ffffff;
+}

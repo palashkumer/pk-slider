@@ -95,7 +95,7 @@ export const SwiperSlider = () => {
 					</SwiperSlide>
 				))}
 			</Swiper>
-			<button type="button" onClick={uploadImage}>
+			<button className="add-img-btn" type="button" onClick={uploadImage}>
 				Add Image 
 			</button>
 		</>

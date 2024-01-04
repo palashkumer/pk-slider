@@ -107,6 +107,7 @@ const SwiperSlider = () => {
     src: item?.image_url,
     alt: `Slide ${index}`
   })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "add-img-btn",
     type: "button",
     onClick: uploadImage
   }, "Add Image"));
